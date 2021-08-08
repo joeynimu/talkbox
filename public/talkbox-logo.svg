@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="93.5" height="22.342" viewBox="0 0 93.5 22.342">
+  <g id="logo_text" data-name="logo+text" transform="translate(145 -162)">
+    <g id="icon" transform="translate(-182.5 1379.5)">
+      <g id="logo">
+        <path id="Path_2" data-name="Path 2" d="M43.288-1240.184H67.62v16.76H59.057l-2.368,2.368-1.507,1.507-3.875-3.875H43.022Z" transform="translate(-4.522 23.684)" fill="none" stroke="#4080e0" stroke-linejoin="round" stroke-width="2"/>
+        <g id="Group_1" data-name="Group 1" transform="translate(2 1)">
+          <circle id="Ellipse_1" data-name="Ellipse 1" cx="1.5" cy="1.5" r="1.5" transform="translate(42 -1210)" fill="#4080e0"/>
+          <circle id="Ellipse_2" data-name="Ellipse 2" cx="1.5" cy="1.5" r="1.5" transform="translate(47 -1210)" fill="#4080e0"/>
+          <circle id="Ellipse_3" data-name="Ellipse 3" cx="1.5" cy="1.5" r="1.5" transform="translate(52 -1210)" fill="#4080e0"/>
+        </g>
+      </g>
+    </g>
+    <text id="TALKBOX" transform="translate(-115.5 178)" font-size="16" font-family="AdobeClean-Bold, Adobe Clean" font-weight="700"><tspan x="0" y="0">TALKBOX</tspan></text>
+  </g>
+</svg>

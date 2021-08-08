@@ -1,0 +1,31 @@
+{
+  "name": "talkbox",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@types/faker": "^5.5.7",
+    "autoprefixer": "^10.3.1",
+    "axios": "^0.21.1",
+    "faker": "^5.5.3",
+    "javascript-time-ago": "^2.3.8",
+    "microsoft-cognitiveservices-speech-sdk": "^1.18.0",
+    "next": "11.0.1",
+    "postcss": "^8.3.6",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-time-ago": "^7.1.1",
+    "tailwindcss": "^2.2.7",
+    "universal-cookie": "^4.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^16.4.13",
+    "@types/react": "^17.0.16",
+    "prettier": "2.3.2",
+    "typescript": "^4.3.5"
+  }
+}
