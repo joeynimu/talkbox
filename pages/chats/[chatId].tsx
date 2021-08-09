@@ -1,6 +1,5 @@
-import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
-import profilePic from "public/images/joe-pic.jpg";
+import { useRouter } from "next/router";
 import backArrow from "public/back-arrow.svg";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,18 +7,31 @@ import MicIcon from "public/mic-icon.svg";
 import getTokenOrRefresh from "utils/token_util";
 const speechsdk = require("microsoft-cognitiveservices-speech-sdk");
 import { data } from "data";
+import { Chat } from "Components/Chats";
+import faker from "faker";
 
 type Chat = {
   text: string;
   time_stamp: Date;
+  sender_id: string;
 };
 
 const SingleChat = () => {
   const router = useRouter();
+  const currChat = data.find(({ chat_id }) => chat_id === router.query.chatId);
+  const sentChat = currChat?.chats[0];
+  const initialChat: Chat = {
+    text: sentChat.chat_text,
+    sender_id: "friend",
+    time_stamp: sentChat.sent_at,
+  };
+
   const [isRecording, setIsRecording] = useState(false);
-  const [chats, setChats] = useState<Chat[] | []>([]);
+  const [statusText, setStatusText] = useState("Online");
+  const [chats, setChats] = useState<Chat[] | []>([initialChat]);
   const [recoInstance, setRecoInstance] = useState(null);
   const chatContainer = useRef<HTMLDivElement>();
+
   useEffect(() => {
     const getToken = async () => {
       const tokenRes = await getTokenOrRefresh();
@@ -59,6 +71,7 @@ const SingleChat = () => {
           {
             text: e.result.text,
             time_stamp: new Date(),
+            sender_id: "you",
           },
         ]);
       }
@@ -67,13 +80,31 @@ const SingleChat = () => {
 
   const onStopRecording = async () => {
     if (recoInstance?.stopContinuousRecognitionAsync) {
-      recoInstance.stopContinuousRecognitionAsync((err: any) => {
+      await recoInstance.stopContinuousRecognitionAsync((err: any) => {
         if (err) {
           console.log({ err });
           return;
         }
         setIsRecording(false);
       });
+
+      setTimeout(() => {
+        setStatusText("Recording...");
+        setTimeout(
+          () =>
+            setChats((prev) => [
+              ...prev,
+              {
+                sender_id: "friend",
+                text: faker.lorem.sentence(),
+                time_stamp: new Date(),
+              },
+            ]),
+          5000
+        );
+
+        setTimeout(() => setStatusText("Online"), 3000);
+      }, 2000);
     }
   };
 
@@ -85,10 +116,6 @@ const SingleChat = () => {
       });
     }
   }, [chats]);
-
-  const currChat = data.find(({ chat_id }) => chat_id === router.query.chatId);
-
-  const sentChat = currChat.chats[0];
 
   return (
     <div className="h-screen">
@@ -109,7 +136,10 @@ const SingleChat = () => {
             width={38}
             className="rounded-full"
           />
-          <span className="pl-2">{currChat.sender_name}</span>
+          <div className="pl-2">
+            <span>{currChat.sender_name}</span>
+            <span className="text-xs block">{statusText}</span>
+          </div>
         </div>
         <div className="w-1/3 flex justify-end">
           <div className="flex flex-col">
@@ -119,44 +149,22 @@ const SingleChat = () => {
           </div>
         </div>
       </div>
+
       <div
         className="bg-[#EFEDED] h-[calc(100vh-132px)] relative z-10 overflow-scroll py-4"
         ref={chatContainer}
       >
-        {/* sender message */}
-        <div
-          className="px-4 py-1 flex flex-col"
-          key={sentChat.sent_at.recent().toLocaleDateString()}
-        >
-          <div className="max-w-[85%] relative">
-            <p className="text-sm bg-white rounded pt-2 pb-[1rem] px-3 shadow relative z-10">
-              {sentChat.chat_text.sentence()}
-            </p>
-            <div className="float-right relative mt-[-24px] mb-[-5px] mr-[4px] z-40">
-              <span className="text-xs  text-[#889A74]">
-                {sentChat.sent_at.recent().toLocaleTimeString()}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {chats.map(({ text, time_stamp }) => (
-          <div
-            className="px-4 py-1 flex items-end flex-col"
-            key={time_stamp.toISOString()}
-          >
-            <div className="max-w-[85%] relative">
-              <p className="text-sm bg-[#E4E9F0] rounded pt-2 pb-[1rem] px-3 shadow relative z-10">
-                {text}
-              </p>
-              <div className="float-right relative mt-[-24px] mb-[-5px] mr-[4px] z-40">
-                <span className="text-xs  text-[#889A74]">
-                  {time_stamp.toLocaleTimeString()}
-                </span>
-              </div>
-            </div>
-          </div>
-        ))}
+        {chats.map(({ text, time_stamp, sender_id }, index: number) => {
+          const sentDate = new Date(time_stamp);
+          return (
+            <Chat
+              chatText={text}
+              sentAt={sentDate}
+              senderId={sender_id}
+              key={index}
+            />
+          );
+        })}
 
         <div className="fixed w-full bottom-0 h-[70px] text-center bg-white shadow flex items-center justify-center">
           <div>
@@ -175,7 +183,7 @@ const SingleChat = () => {
                 />
               ) : (
                 <span
-                  className="bg-white h-[20px] w-[20px]"
+                  className="bg-white h-[20px] w-[20px] animate-pulse"
                   onClick={onStopRecording}
                 />
               )}

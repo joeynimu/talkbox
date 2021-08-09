@@ -11,8 +11,8 @@ export type ChatProps = {
   chatId: number | string;
   senderName: string;
   senderImage: string;
-  sentAt: any;
-  text: any;
+  sentAt: Date;
+  text: string;
 };
 
 const ChatList: FC<ChatProps> = ({
@@ -23,7 +23,7 @@ const ChatList: FC<ChatProps> = ({
   senderImage,
 }) => {
   return (
-    <div className="flex px-4 py-3 w-full border-b border-opacity-60 hover:bg-gray-200 hover:bg-opacity-30">
+    <div className="flex px-4 py-4 w-full border-b border-opacity-60 hover:bg-gray-200 hover:bg-opacity-30">
       <div>
         <Link href={`/chats/${chatId}`}>
           <a>
@@ -46,10 +46,10 @@ const ChatList: FC<ChatProps> = ({
             <div className="relative">
               <p className="font-medium text-base">{senderName}</p>
               <span className="absolute top-1 right-0 text-xs">
-                <ReactTimeAgo date={new Date(sentAt.past())} />
+                <ReactTimeAgo date={new Date(sentAt)} />
               </span>
             </div>
-            <p className="text-sm max-w-full truncate">{text.paragraph()}</p>
+            <p className="text-sm max-w-full truncate">{text}</p>
           </a>
         </Link>
       </div>
