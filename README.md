@@ -2,6 +2,8 @@
 
 This is a voice-to-speech prototype using [Microsoft's speech-to-text service][https://azure.microsoft.com/en-gb/services/cognitive-services/speech-to-text/#overview]
 
+**\*Please note that this code might not be production-ready. It doesn't include any tests and while the code works, it might have some duplication**
+
 ## Tech Stack used
 
 - [Nextjs](https://nextjs.org/) for the UI layer and API routes
