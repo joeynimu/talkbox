@@ -19,16 +19,16 @@ This is a voice-to-speech prototype using [Microsoft's speech-to-text service][h
 - View chat with a specific contact and voice-text-functionality
 - Simulates a response from your contact
 
-<img src="/public/screenshots/1.png" width="411" height="731" />
+<img src="/public/screenshots/1.png" width="411" height="731" align="center" />
 
 <img src="/public/screenshots/2.png"
-width="411" height="731" />
+width="411" height="731" align="center" style="margin-top:10px" />
 
 <img src="/public/screenshots/3.png"
-width="411" height="731" />
+width="411" height="731"  align="center" style="margin-top:10px"/>
 
 <img src="/public/screenshots/4.png"
-width="411" height="731" />
+width="411" height="731" align="center" style="margin-top:10px" />
 
 ## Getting started
 
