@@ -19,7 +19,13 @@ This is a voice-to-speech prototype using [Microsoft's speech-to-text service][h
 - View chat with a specific contact and voice-text-functionality
 - Simulates a response from your contact
 
-![Home page view](/public/screenshots/1.png)
+<img src="/public/screenshots/1.png" />
+
+<img src="/public/screenshots/2.png" />
+
+<img src="/public/screenshots/3.png" />
+
+![Home page view]()
 
 ![Home page view](/public/screenshots/2.png)
 
