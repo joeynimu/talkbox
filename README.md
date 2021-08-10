@@ -2,6 +2,12 @@
 
 This is a voice-to-speech prototype using [Microsoft's speech-to-text service][https://azure.microsoft.com/en-gb/services/cognitive-services/speech-to-text/#overview]
 
+## Tech Stack used
+
+- React/Nextjs for the UI layer and API routes
+- Tailwindcss for styling
+- Azure Speech Congnitive Service for the speech-to-text functionality
+
 ## Getting started
 
 Start by cloning the repo by running `git clone https://github.com/joeynimu/talkbox.git`. After cloning ensure you have checkout to the specific repo's directory.
