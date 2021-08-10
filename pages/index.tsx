@@ -1,13 +1,7 @@
-import {
-  useMemo,
-  useState,
-  ChangeEventHandler,
-  useEffect,
-  useCallback,
-} from "react";
+import { useMemo, useState, useCallback } from "react";
 import { Header } from "Components/Header";
 import { ChatList } from "Components/Chats";
-import { data } from "data";
+import data from "data";
 import Image from "next/image";
 import MicIcon from "public/mic-icon.svg";
 import PlusIcon from "public/plus-icon.svg";
@@ -30,7 +24,7 @@ const App = () => {
     [memoizedData]
   );
 
-  const handleSearchChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+  const handleSearchChange = useCallback(
     (e) => setSearchText(e.target.value),
     []
   );
@@ -39,7 +33,7 @@ const App = () => {
     <div className="h-screen relative">
       <Header
         onHandleSearchChange={handleSearchChange}
-        searchText={setSearchText}
+        searchText={searchText}
       />
       <div className="z-10 relative pb-4 h-[calc(100vh-68px)] mt-[68px]">
         {sortedData.map(({ chats, chat_id, sender_name, sender_image }) => {
@@ -56,7 +50,10 @@ const App = () => {
             />
           );
         })}
-        <div className="fixed bottom-4 rounded-full bg-[#3E7FE0] flex items-center justify-center right-4 h-12 w-12 shadow">
+        <div
+          className="fixed bottom-4 rounded-full bg-[#3E7FE0] flex items-center justify-center right-4 h-12 w-12 shadow cursor-pointer"
+          title="New recording"
+        >
           <Image
             src={MicIcon}
             alt="Start recording"

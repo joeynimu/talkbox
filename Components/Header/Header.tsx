@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FC } from "react";
+import { FC, ChangeEventHandler, SetStateAction } from "react";
 import Link from "next/link";
 import logo from "public/talkbox-logo.png";
 import profilePic from "public/images/joe-pic.jpg";
@@ -7,9 +7,9 @@ import SearchBox from "Components/Search/Search";
 import { useState } from "react";
 
 const Header: FC<{
-  setSearchText: string;
-  onHandleSearchChange: () => void;
-}> = ({ setSearchText, onHandleSearchChange }) => {
+  searchText: string;
+  onHandleSearchChange: (e: any) => void;
+}> = ({ searchText, onHandleSearchChange }) => {
   const [isSearchView, setSearchView] = useState(false);
   const onSearchHide = () => setSearchView(false);
   const onSearchShow = () => setSearchView(true);
@@ -41,7 +41,7 @@ const Header: FC<{
       </div>
       {isSearchView && (
         <SearchBox
-          searchText={setSearchText}
+          searchText={searchText}
           onHide={onSearchHide}
           onHandleSearch={onHandleSearchChange}
         />

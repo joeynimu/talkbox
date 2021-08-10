@@ -1,3 +1,4 @@
+import { ChangeEventHandler } from "react";
 import Image from "next/image";
 import { FC, useEffect, useRef } from "react";
 
@@ -6,7 +7,7 @@ import backArrow from "public/back-arrow.svg";
 const SearchBox: FC<{
   searchText: string;
   onHide: () => void;
-  onHandleSearch: () => void;
+  onHandleSearch: (e: any) => void;
 }> = ({ searchText, onHide, onHandleSearch }) => {
   const inputRef = useRef<HTMLInputElement>();
   useEffect(() => {

@@ -6,9 +6,10 @@ import Link from "next/link";
 import MicIcon from "public/mic-icon.svg";
 import getTokenOrRefresh from "utils/token_util";
 const speechsdk = require("microsoft-cognitiveservices-speech-sdk");
-import { data } from "data";
+import data from "data";
 import { Chat } from "Components/Chats";
 import faker from "faker";
+import { GetStaticProps, GetStaticPaths } from "next";
 
 type Chat = {
   text: string;
@@ -16,14 +17,33 @@ type Chat = {
   sender_id: string;
 };
 
-const SingleChat = () => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = data.map(({ chat_id }) => ({
+    params: { chatId: chat_id },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = () => {
+  return {
+    props: {
+      data,
+    },
+  };
+};
+
+const SingleChat = ({ data }) => {
   const router = useRouter();
   const currChat = data.find(({ chat_id }) => chat_id === router.query.chatId);
   const sentChat = currChat?.chats[0];
   const initialChat: Chat = {
-    text: sentChat.chat_text,
+    text: sentChat?.chat_text || "Hey there!",
     sender_id: "friend",
-    time_stamp: sentChat.sent_at,
+    time_stamp: sentChat?.sent_at || new Date(),
   };
 
   const [isRecording, setIsRecording] = useState(false);
