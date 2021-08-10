@@ -2,7 +2,7 @@ import { useMemo, useState, useCallback } from "react";
 import { Header } from "Components/Header";
 import { ChatList } from "Components/Chats";
 import SearchBox from "Components/Search/Search";
-import data from "data";
+import data from "Data";
 import Image from "next/image";
 import MicIcon from "public/mic-icon.svg";
 import PlusIcon from "public/plus-icon.svg";

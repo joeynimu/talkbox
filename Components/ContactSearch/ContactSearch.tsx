@@ -2,7 +2,7 @@ import { useState, useCallback, useMemo } from "react";
 import SearchBox from "Components/Search/Search";
 import Link from "next/link";
 import Image from "next/image";
-import data from "data";
+import data from "Data";
 
 const ContactSearch = ({ onHide }) => {
   const [searchText, setSearchText] = useState("");

@@ -4,9 +4,10 @@ This is a voice-to-speech prototype using [Microsoft's speech-to-text service][h
 
 ## Tech Stack used
 
-- React/Nextjs for the UI layer and API routes
-- Tailwindcss for styling
-- Azure Speech Congnitive Service for the speech-to-text functionality
+- [Nextjs](https://nextjs.org/) for the UI layer and API routes
+- [Tailwindcss](https://tailwindcss.com/) for styling
+- [Azure Speech Congnitive Service](https://azure.microsoft.com/en-gb/services/cognitive-services/speech-to-text/#overview) for the speech-to-text functionality
+- [Faker](https://github.com/marak/Faker.js/), for simulating and generating some dummy data
 
 ## Getting started
 
