@@ -11,6 +11,20 @@ This is a voice-to-speech prototype using [Microsoft's speech-to-text service][h
 - [Azure Speech Congnitive Service](https://azure.microsoft.com/en-gb/services/cognitive-services/speech-to-text/#overview) for the speech-to-text functionality
 - [Faker](https://github.com/marak/Faker.js/), for simulating and generating some dummy data
 
+## Features
+
+- View a list of conversations.
+- Search conversations by `sender_name`
+- Start new conversation from "contacts" and search contacts
+- View chat with a specific contact and voice-text-functionality
+- Simulates a response from your contact
+
+![Home page view](/public/screenshots/1.png)
+
+![Home page view](/public/screenshots/2.png)
+
+![Home page view](/public/screenshots/3.png)
+
 ## Getting started
 
 Start by cloning the repo by running `git clone https://github.com/joeynimu/talkbox.git`. After cloning ensure you have checkout to the specific repo's directory.
