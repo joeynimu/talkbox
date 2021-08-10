@@ -6,13 +6,7 @@ import profilePic from "public/images/joe-pic.jpg";
 import SearchBox from "Components/Search/Search";
 import { useState } from "react";
 
-const Header: FC<{
-  searchText: string;
-  onHandleSearchChange: (e: any) => void;
-}> = ({ searchText, onHandleSearchChange }) => {
-  const [isSearchView, setSearchView] = useState(false);
-  const onSearchHide = () => setSearchView(false);
-  const onSearchShow = () => setSearchView(true);
+const Header = ({ children, onSearchShow }) => {
   return (
     <header className="fixed top-0  shadow py-3 px-4 bg-white z-40 w-full">
       <div className="flex items-center">
@@ -39,13 +33,7 @@ const Header: FC<{
           </div>
         </div>
       </div>
-      {isSearchView && (
-        <SearchBox
-          searchText={searchText}
-          onHide={onSearchHide}
-          onHandleSearch={onHandleSearchChange}
-        />
-      )}
+      {children}
     </header>
   );
 };

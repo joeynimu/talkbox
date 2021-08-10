@@ -1,13 +1,26 @@
 import { useMemo, useState, useCallback } from "react";
 import { Header } from "Components/Header";
 import { ChatList } from "Components/Chats";
+import SearchBox from "Components/Search/Search";
 import data from "data";
 import Image from "next/image";
 import MicIcon from "public/mic-icon.svg";
 import PlusIcon from "public/plus-icon.svg";
+import ContactSearch from "Components/ContactSearch/ContactSearch";
 
 const App = () => {
   const [searchText, setSearchText] = useState("");
+  const [isSearchView, setSearchView] = useState(false);
+  const [isContactSearchView, setContactSearchView] = useState(false);
+  const onSearchHide = useCallback(() => {
+    setSearchView(false);
+    setSearchText("");
+  }, []);
+
+  const onSearchShow = useCallback(() => setSearchView(true), []);
+  const showContactsView = useCallback(() => setContactSearchView(true), []);
+  const hideContactsView = useCallback(() => setContactSearchView(false), []);
+
   const memoizedData = useMemo(() => {
     if (!searchText) return data;
     return data.filter(({ sender_name }) =>
@@ -31,11 +44,25 @@ const App = () => {
 
   return (
     <div className="h-screen relative">
-      <Header
-        onHandleSearchChange={handleSearchChange}
-        searchText={searchText}
-      />
+      {isContactSearchView && <ContactSearch onHide={hideContactsView} />}
+      <Header onSearchShow={onSearchShow}>
+        {isSearchView && (
+          <div className="absolute top-0 left-0 w-full h-full px-4 z-50 flex items-center justify-center bg-white">
+            <SearchBox
+              searchText={searchText}
+              onHide={onSearchHide}
+              onHandleSearch={handleSearchChange}
+            />
+          </div>
+        )}
+      </Header>
+
       <div className="z-10 relative pb-4 h-[calc(100vh-68px)] mt-[68px]">
+        {sortedData.length === 0 && (
+          <p className="text-medium font-bold text-center py-4">
+            No result(s) matching your search criteria :(
+          </p>
+        )}
         {sortedData.map(({ chats, chat_id, sender_name, sender_image }) => {
           const latestChat = chats[chats.length - 1];
           const { chat_text, sent_at } = latestChat;
@@ -60,7 +87,10 @@ const App = () => {
             className="fill-current"
             layout="fixed"
           />
-          <div className="h-5 w-5 absolute bottom-[-2px] right-[-2px] bg-white rounded-full shadow-lg flex items-center justify-center">
+          <div
+            className="h-5 w-5 absolute bottom-[-2px] right-[-2px] bg-white rounded-full shadow-lg flex items-center justify-center"
+            onClick={showContactsView}
+          >
             <Image
               src={PlusIcon}
               alt="Start recording"

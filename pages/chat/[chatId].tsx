@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/router";
 import backArrow from "public/back-arrow.svg";
 import Image from "next/image";
@@ -48,7 +48,7 @@ const SingleChat = ({ data }) => {
 
   const [isRecording, setIsRecording] = useState(false);
   const [statusText, setStatusText] = useState("Online");
-  const [chats, setChats] = useState<Chat[] | []>([initialChat]);
+  const [chats, setChats] = useState<Chat[] | []>([]);
   const [recoInstance, setRecoInstance] = useState(null);
   const chatContainer = useRef<HTMLDivElement>();
 
@@ -61,7 +61,15 @@ const SingleChat = ({ data }) => {
     getToken();
   }, []);
 
-  const setUpConfig = async () => {
+  const hasChat = router?.query?.hasChat?.toString() || "false";
+
+  useEffect(() => {
+    if (hasChat === "true") {
+      setChats([initialChat]);
+    }
+  }, [hasChat]);
+
+  const setUpConfig = useCallback(async () => {
     const tokenObj = await getTokenOrRefresh();
     const speechConfig = speechsdk.SpeechConfig.fromAuthorizationToken(
       tokenObj.authToken,
@@ -71,9 +79,9 @@ const SingleChat = ({ data }) => {
 
     const audioConfig = speechsdk.AudioConfig.fromDefaultMicrophoneInput();
     return new speechsdk.SpeechRecognizer(speechConfig, audioConfig);
-  };
+  }, []);
 
-  const onStartRecording = async () => {
+  const onStartRecording = useCallback(async () => {
     const recognizer = await setUpConfig();
     setRecoInstance(recognizer);
     recognizer.startContinuousRecognitionAsync(function (err) {
@@ -96,9 +104,9 @@ const SingleChat = ({ data }) => {
         ]);
       }
     };
-  };
+  }, []);
 
-  const onStopRecording = async () => {
+  const onStopRecording = useCallback(async () => {
     if (recoInstance?.stopContinuousRecognitionAsync) {
       await recoInstance.stopContinuousRecognitionAsync((err: any) => {
         if (err) {
@@ -126,7 +134,7 @@ const SingleChat = ({ data }) => {
         setTimeout(() => setStatusText("Online"), 3000);
       }, 2000);
     }
-  };
+  }, [recoInstance]);
 
   useEffect(() => {
     if (chatContainer?.current) {
@@ -174,6 +182,13 @@ const SingleChat = ({ data }) => {
         className="bg-[#EFEDED] h-[calc(100vh-132px)] relative z-10 overflow-scroll py-4"
         ref={chatContainer}
       >
+        {chats.length === 0 && (
+          <p className="text-center text-sm px-4 py-2 text-[#889A74] bg-[#E4E9F0] mx-4">
+            This is the beginning of a conversation with{" "}
+            <span className="font-medium">{currChat.sender_name}</span>. Start a
+            conversation with them by pressing the record button below.
+          </p>
+        )}
         {chats.map(({ text, time_stamp, sender_id }, index: number) => {
           const sentDate = new Date(time_stamp);
           return (

@@ -25,7 +25,12 @@ const ChatList: FC<ChatProps> = ({
   return (
     <div className="flex px-4 py-4 w-full border-b border-opacity-60 hover:bg-gray-200 hover:bg-opacity-30">
       <div>
-        <Link href={`/chat/${chatId}`}>
+        <Link
+          href={{
+            pathname: `chat/${chatId}`,
+            query: { hasChat: true },
+          }}
+        >
           <a>
             <div className="mr-2 w-[38px] h-[38px]">
               <Image
@@ -41,7 +46,12 @@ const ChatList: FC<ChatProps> = ({
         </Link>
       </div>
       <div className="w-[calc(100%-40px)]">
-        <Link href={`/chat/${chatId}`}>
+        <Link
+          href={{
+            pathname: `chat/${chatId}`,
+            query: { hasChat: true },
+          }}
+        >
           <a>
             <div className="relative">
               <p className="font-medium text-base">{senderName}</p>
